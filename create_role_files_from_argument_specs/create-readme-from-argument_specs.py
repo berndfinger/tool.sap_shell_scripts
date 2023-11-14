@@ -67,13 +67,12 @@ with open(argument_specs_path) as file_argument_specs:
     argument_specs_dict[role_name].update(yaml.safe_load(file_argument_specs))
     _vars_dict = (json.dumps(argument_specs_dict, indent=4, sort_keys=False, separators=(',', ': ')))
 
-# print (_vars_dict)
 print(_begin_pattern)
 print('## Role Input Parameters')
 
 for key, value in list(argument_specs_dict.values())[0]['argument_specs']['main']['options'].items():
    print("### " + key)
-   print("- _Type:_ '" + str(value['type'] + "'"), end='')
+   print("- _Type:_ `" + str(value['type'] + "`"), end='')
    if(value['type'] == 'list' and value['elements'] == 'dict'):
       print(' of dicts; elements:')
       for key_2, value_2 in list(argument_specs_dict.values())[0]['argument_specs']['main']['options'][key]['options'].items():
@@ -93,13 +92,13 @@ for key, value in list(argument_specs_dict.values())[0]['argument_specs']['main'
    print("")
    if('default' in value):
       if(value['type']) == 'bool':
-         print("- _Default:_ '" + str(value['default']).lower() + "'")
+         print("- _Default:_ `" + str(value['default']).lower() + "`")
       else:
-         print("- _Default:_ '" + str(value['default']) + "'")
+         print("- _Default:_ `" + str(value['default']) + "`")
    if('choices' in value):
       print("- _Possible Values:_<br>")
       for elem in value['choices']:
-         print ("  - '" + elem + "'")
+         print ("  - `" + elem + "`")
    print("")
    for elem in value['description']:
       print(elem + "<br>")
@@ -119,19 +118,17 @@ for key, value in list(argument_specs_dict.values())[0]['argument_specs']['main'
       for elem in _example_lines:
          print(elem)
       print("```")
-#   print("")
+      print("")
 
 #   if(value['type'] == 'list' and value['elements'] == 'dict'):
 #      print(' of dicts; elements:')
 
-# print(_end_pattern)
-
 _continue_switch = False
 
+# The rest of the README.md file, which also includes _end_pattern, is displayed here:
 with open(readme_path) as file_readme:
    for _line in file_readme:
       if(_end_pattern in _line):
          _continue_switch = True
       if(_continue_switch):
          print(_line, end='')
-
