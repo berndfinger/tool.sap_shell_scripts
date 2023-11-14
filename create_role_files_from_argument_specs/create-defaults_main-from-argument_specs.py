@@ -62,10 +62,10 @@ for key, value in list(argument_specs_dict.values())[0]['argument_specs']['main'
 
    if('default' in value):
       print(key + ':', end='')
-      if(value['type']) == 'bool':
+      if(('type' in value) and (value['type']) == 'bool'):
          print(' ' + str(value['default']).lower())
       else:
-         if('{{' in value['default']):
+         if('{{' in str(value['default'])):
             print(' "' + str(value['default']) + '"')
          else:
             if('list' in str(type(value['default']))):
@@ -82,7 +82,7 @@ for key, value in list(argument_specs_dict.values())[0]['argument_specs']['main'
    if('choices' in value):
       print("# Possible Values:")
       for elem in value['choices']:
-         print ("# - " + elem)
+         print ("# - " + str(elem))
 
    if('example' in value):
       print("# Example: See README.md")

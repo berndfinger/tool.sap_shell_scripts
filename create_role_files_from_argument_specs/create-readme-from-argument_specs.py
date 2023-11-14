@@ -72,15 +72,27 @@ print('## Role Input Parameters')
 
 for key, value in list(argument_specs_dict.values())[0]['argument_specs']['main']['options'].items():
    print("### " + key)
-   print("- _Type:_ `" + str(value['type'] + "`"), end='')
-   if(value['type'] == 'list' and value['elements'] == 'dict'):
-      print(' of dicts; elements:')
-      for key_2, value_2 in list(argument_specs_dict.values())[0]['argument_specs']['main']['options'][key]['options'].items():
-         print('  #### ' + key_2)
-         print(_indent + '- _Type:_ ' + str(value_2['type']))
-         print("")
-         for elem in value_2['description']:
-            print(_indent + elem)
+   if('type' in value):
+      _type = str(value['type'])
+   else:
+      _type = 'str'
+   print("- _Type:_ `" + _type + "`", end='')
+   if('elements' in value):
+      if(_type == 'list' and value['elements'] == 'dict'):
+         if('options' not in list(argument_specs_dict.values())[0]['argument_specs']['main']['options'][key]):
+            print(" of dicts; elements: See Example.", end='')
+         else:
+            print(' of dicts; elements:')
+            for key_2, value_2 in list(argument_specs_dict.values())[0]['argument_specs']['main']['options'][key]['options'].items():
+               print('  #### ' + key_2)
+               if('type' in value_2):
+                  _type = str(value_2['type'])
+               else:
+                  _type = 'str'
+               print(_indent + "- _Type:_ `" + _type + "`")
+               print("")
+               for elem in value_2['description']:
+                  print(_indent + elem)
 #         print("")
 #      if('example' in value):
 #         _example=str(value['example'])
@@ -91,14 +103,14 @@ for key, value in list(argument_specs_dict.values())[0]['argument_specs']['main'
 #   else:
    print("")
    if('default' in value):
-      if(value['type']) == 'bool':
+      if(('type' in value) and (value['type']) == 'bool'):
          print("- _Default:_ `" + str(value['default']).lower() + "`")
       else:
          print("- _Default:_ `" + str(value['default']) + "`")
    if('choices' in value):
       print("- _Possible Values:_<br>")
       for elem in value['choices']:
-         print ("  - `" + elem + "`")
+         print ("  - `" + str(elem) + "`")
    print("")
    for elem in value['description']:
       print(elem + "<br>")
