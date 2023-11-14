@@ -2,7 +2,7 @@
 
 Purpose: Update a role's `README.md` and `defaults/main.yml` files with all vars entries from a role's `meta/argument_specs.yml` file
 
-The shell scripts `update-role-readme.sh` and `update-role-defaults_main.sh' are used for this purpose. Each of them is calling a 
+The shell scripts `update-role-readme.sh` and `update-role-defaults_main.sh` are used for this purpose. Each of them is calling a
 corresponding Python programs `create-readme-from-argument_specs.py` or `create-defaults_main-from-argument_specs.py` for creating
 the content of the files.
 
